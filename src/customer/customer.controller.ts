@@ -10,13 +10,14 @@ import {
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { UppercasePipe } from 'src/common/pipes/uppercase/uppercase.pipe';
 
 @Controller('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
-  create(@Body() createCustomerDto: CreateCustomerDto) {
+  create(@Body(new UppercasePipe()) createCustomerDto: CreateCustomerDto) {
     return this.customerService.create(createCustomerDto);
   }
 
