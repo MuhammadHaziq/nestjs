@@ -18,11 +18,11 @@ import { Role } from 'src/guards/roles/roles.enum';
 import { RolesGuard } from 'src/guards/roles/roles.guard';
 
 @Controller('customer')
+@UseGuards(AuthGuard, RolesGuard)
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
-  @UseGuards(AuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   create(@Body(new UppercasePipe()) createCustomerDto: CreateCustomerDto) {
     return this.customerService.create(createCustomerDto);
