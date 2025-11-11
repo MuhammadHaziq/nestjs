@@ -6,17 +6,24 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 import { UppercasePipe } from 'src/common/pipes/uppercase/uppercase.pipe';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { Roles } from 'src/guards/roles/roles.decorator';
+import { Role } from 'src/guards/roles/roles.enum';
+import { RolesGuard } from 'src/guards/roles/roles.guard';
 
 @Controller('customer')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
+  @UseGuards(AuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   create(@Body(new UppercasePipe()) createCustomerDto: CreateCustomerDto) {
     return this.customerService.create(createCustomerDto);
   }
