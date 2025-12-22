@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -16,9 +17,11 @@ import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { Roles } from 'src/guards/roles/roles.decorator';
 import { Role } from 'src/guards/roles/roles.enum';
 import { RolesGuard } from 'src/guards/roles/roles.guard';
+import { HttpExceptionFilter } from 'src/filters/http-exception/http-exception.filter';
 
 @Controller('customer')
 @UseGuards(AuthGuard, RolesGuard)
+@UseFilters(HttpExceptionFilter)
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
