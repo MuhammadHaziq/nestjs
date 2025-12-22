@@ -29,6 +29,7 @@ export class CustomerController {
   }
 
   @Get()
+  @Roles(Role.ADMIN, Role.USER)
   findAll() {
     return this.customerService.findAll();
   }
