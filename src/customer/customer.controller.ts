@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   UseFilters,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -38,20 +39,20 @@ export class CustomerController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.customerService.findOne(id);
   }
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateCustomerDto: UpdateCustomerDto,
   ) {
-    return this.customerService.update(+id, updateCustomerDto);
+    return this.customerService.update(id, updateCustomerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.customerService.remove(id);
   }
 }
