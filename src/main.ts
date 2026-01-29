@@ -15,5 +15,7 @@ async function bootstrap() {
     }),
   );
   await app.listen(process.env.PORT ?? 3009);
+  /** Enable shutdown hooks to gracefully shutdown the application */
+  app.enableShutdownHooks();
 }
 void bootstrap();
